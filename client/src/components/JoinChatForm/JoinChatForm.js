@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import styles from './JoinChatForm.module.css';
 
-const JoinChatForm = () => {
-    const [name, setName] = useState('');
-    const [roomId, setRoomId] = useState('');
+const JoinChatForm = ({ onJoin, username, setUsername, roomId, setRoomId }) => {
 
-    const handleJoinRoom = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(`Name: ${name}, Room ID: ${roomId}`);
-    };
+        onJoin({
+            username,
+            roomId
+        })
+    }
 
     return (
         <div className={styles.joinChatContainer}>
             <h1 className={styles.heading}>Join a Room to Chat</h1>
-            <form onSubmit={handleJoinRoom} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <input
                     type="text"
                     placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     className={styles.input}
                     required
                 />

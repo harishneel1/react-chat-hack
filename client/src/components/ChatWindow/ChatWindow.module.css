@@ -13,6 +13,12 @@
     margin-bottom: 20px;
 }
 
+.messageName {
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 6px;
+}
+
 .chatHeader h2 {
     margin-bottom: 0.5rem;
 }
@@ -22,6 +28,8 @@
 }
 
 .chatMessages {
+    display: flex;
+    flex-direction: column;
     width: 80%;
     max-width: 800px;
     height: 60vh;
@@ -34,13 +42,21 @@
 }
 
 .chatMessage {
+    width: 50%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     padding: 0px 12px;
     margin-bottom: 8px;
     border-radius: 8px;
     background-color: #7289da;
     color: #fff;
+}
+
+.time {
+    font-size: 10px;
+    margin-right: 6px;
 }
 
 .myMessage {

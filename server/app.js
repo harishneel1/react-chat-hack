@@ -26,8 +26,21 @@ io.on("connection", (socket) => {
     // Upon connection - to all other users
     socket.broadcast.emit("message", `User ${socket.id.substring(0, 5)} connected`)
 
-    // Upon disconnection - to all other users
+    // handling a user joining a room
+    socket.on("user_join_room", (data) => {
+        const { roomId, username } = data || {};
 
+        socket.join(roomId);
+
+        console.log(`${username} has joined the room ${roomId}`)
+    })
+
+    // broadcast the message to everyone in the room
+    socket.on("send_message", ({ username, roomId, text }) => {
+        socket.to(roomId).emit("message", { username, text })
+    })
+
+    // Upon disconnection - to all other users
     socket.on("disconnect", () => {
         socket.broadcast.emit("message", `User ${socket.id.substring(0, 5)} disconnected`)
     })
