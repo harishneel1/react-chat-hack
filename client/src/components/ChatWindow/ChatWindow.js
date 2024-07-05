@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ChatWindow.module.css';
 import { v4 as uuidv4 } from 'uuid';
+import { getFormattedTime } from '../../utils';
 
 const ChatWindow = ({ username, roomId, socket }) => {
     const [currentMessage, setCurrentMessage] = useState('');
@@ -144,7 +145,7 @@ const ChatWindow = ({ username, roomId, socket }) => {
                                     <span className={styles.messageName}>{message.username}&#x3a;</span>
                                     <span>{message.text}</span>
                                 </div>
-                                <div className={styles.time}>7:19 AM</div>
+                                <div className={styles.time}>{getFormattedTime()}</div>
                             </div>
                         )
                     }
