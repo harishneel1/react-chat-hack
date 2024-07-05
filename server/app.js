@@ -41,4 +41,9 @@ io.on("connection", (socket) => {
     socket.on("send_message", ({ username, roomId, text }) => {
         socket.to(roomId).emit("message", { username, text, type: "message" })
     })
+
+    //handling activity detection 
+    socket.on("user_typing", ({ username, roomId }) => {
+        socket.to(roomId).emit("user_typing", username)
+    })
 })

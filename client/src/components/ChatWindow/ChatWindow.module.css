@@ -39,6 +39,17 @@
     border-radius: 8px;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     padding: 20px;
+    position: relative;
+}
+
+.activityText {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px;
+    font-size: 12px;
+
 }
 
 .chatMessage {

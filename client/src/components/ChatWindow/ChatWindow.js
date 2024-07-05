@@ -6,9 +6,11 @@ const ChatWindow = ({ username, roomId, socket }) => {
     const [currentMessage, setCurrentMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const hasJoinedMessageBeenAdded = useRef(false);
+    const [activityMsg, setActivityMsg] = useState("")
 
 
     useEffect(() => {
+        // Welcome message
         if (!hasJoinedMessageBeenAdded.current) {
             const uuid = uuidv4();
             setMessages(prev => [...prev, {
@@ -23,6 +25,9 @@ const ChatWindow = ({ username, roomId, socket }) => {
 
 
     useEffect(() => {
+
+        // notifying users that a user has joined
+
         socket.on("user_join_room", (message) => {
             const uuid = uuidv4();
             setMessages(prev => [...prev, {
@@ -39,6 +44,9 @@ const ChatWindow = ({ username, roomId, socket }) => {
 
 
     useEffect(() => {
+
+        //receiving messages from the server
+
         socket.on("message", ({ username, text, type }) => {
             const uuid = uuidv4();
             setMessages(prevMessages => [...prevMessages, {
@@ -54,6 +62,9 @@ const ChatWindow = ({ username, roomId, socket }) => {
     }, [socket])
 
     useEffect(() => {
+
+        // notifying users that the current user left
+
         const handleBeforeUnload = (event) => {
             socket.emit('user_left_room', { username, roomId });
             event.returnValue = ''; // Required for Chrome to trigger the event
@@ -86,6 +97,29 @@ const ChatWindow = ({ username, roomId, socket }) => {
         setCurrentMessage("")
     }
 
+    useEffect(() => {
+        let timer;
+
+        socket.on("user_typing", (username) => {
+            clearTimeout(timer);
+            setActivityMsg(`${username} is typing...`);
+            setTimeout(() => {
+                timer = setActivityMsg("");
+            }, 500);
+        })
+
+        return () => {
+            socket.off("user_typing")
+        }
+    }, [socket])
+
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setCurrentMessage(value);
+        socket.emit("user_typing", { username, roomId });
+    }
+
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
@@ -116,13 +150,14 @@ const ChatWindow = ({ username, roomId, socket }) => {
                     }
                 })
                 }
+                <div className={styles.activityText}>{activityMsg}</div>
             </div>
             <form onSubmit={handleSendMessage} className={styles.messageForm}>
                 <input
                     type="text"
                     placeholder="Type your message..."
                     value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
+                    onChange={handleInputChange}
                     className={styles.messageInput}
                     required
                 />
