@@ -102,11 +102,11 @@ const ChatWindow = ({ username, roomId, socket }) => {
         let timer;
 
         socket.on("user_typing", (username) => {
-            clearTimeout(timer);
             setActivityMsg(`${username} is typing...`);
-            setTimeout(() => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
                 timer = setActivityMsg("");
-            }, 500);
+            }, 2000);
         })
 
         return () => {
