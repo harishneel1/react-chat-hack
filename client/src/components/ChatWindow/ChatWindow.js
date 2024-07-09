@@ -124,7 +124,7 @@ const ChatWindow = ({ username, roomId, socket }) => {
     return (
         <div className={styles.chatContainer}>
             <div className={styles.chatHeader}>
-                <h2>Room ID: {roomId}</h2>
+                <h2>Room Name: {roomId}</h2>
                 <p>Welcome, <span>{username}</span></p>
             </div>
             <div className={styles.chatMessages}>
