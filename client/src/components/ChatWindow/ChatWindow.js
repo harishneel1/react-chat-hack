@@ -68,7 +68,6 @@ const ChatWindow = ({ username, roomId, socket }) => {
 
         const handleBeforeUnload = (event) => {
             socket.emit('user_left_room', { username, roomId });
-            event.returnValue = ''; // Required for Chrome to trigger the event
         };
 
         window.addEventListener('beforeunload', handleBeforeUnload);

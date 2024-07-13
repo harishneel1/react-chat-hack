@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
 //Initializing the connection
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:3003");
 
 function App() {
 

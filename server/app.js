@@ -3,7 +3,7 @@ import express from "express"
 
 const app = express();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Server is now listening to PORT ${PORT}`)
